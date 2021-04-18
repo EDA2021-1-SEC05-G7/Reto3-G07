@@ -84,13 +84,13 @@ def addhashtag(analyzer, hashtag)
     hass = analyzer["Hashtags"]
     hashy = hashtag['hashtag']
     existhashhash = mp.contains(hass, hashy) #revisa si el map "hass" contiene la llave "hashy" (el hashtag) y retorna true o false
-    if existhashhash:                       #el "if" inicia si "existhashash" es true
-        toxic = mp.get(hass, hashy)     #"toxic" guarda la pareja (llave,valor) de la llave "hasy" (el pais)
-        eltag = me.getValue(toxic)      #retorna el Valor de la pareja llave,valor que retorna "toxic"
+    if existhashhash:                        #el "if" inicia si "existhashash" es true
+        toxic = mp.get(hass, hashy)          #"toxic" guarda la pareja (llave,valor) de la llave "hashy" (el pais)
+        eltag = me.getValue(toxic)           #retorna el Valor de la pareja llave,valor que retorna "toxic"
     else:                              #si el map "hass" no tiene la llave "hashy" entonces se ejecuta este "else"
         eltag = newHashtagEntry(hashy)         #"pais" guarda el diccionario que retorna la funcion "newVidPais()" con "pai" como valor del key "pais"
         mp.put(hass, hashy, eltag)       #pone en el map "hass", en la llave "hashy" el dict "pais"
-    lt.addLast(eltag["Hashtag"], video)  #añade un nuevo a la lista que esta dentro de la llave "videos" en el dict "pais"
+    lt.addLast(eltag["Hashtag"], hashtag)  #añade un nuevo a la lista que esta dentro de la llave "videos" en el dict "pais"
 
 
 
