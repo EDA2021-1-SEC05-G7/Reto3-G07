@@ -38,8 +38,74 @@ los mismos.
 """
 
 # Construccion de modelos
+def newAnalyzer():
+    """ Inicializa el analizador
+
+    Crea una lista vacia para guardar todos los eventos y 
+    los analisis de los eventos. Además se crea un mapa que
+    guarda los hashtags
+
+    Retorna el analizador inicializado.
+    """
+    analyzer = {'Eventos': None,
+                'AnalisisEventos': None
+                'HashTags'
+                }
+
+    analyzer['Eventos'] = lt.newList('ARRAY_LIST', compareIds)
+
+    analyzer['AnalisisEventos'] = lt.newList('ARRAY_LIST', compareIds)
+
+    analyzer['Hashtags'] = om.newMap(omaptype='RBT',
+                                      comparefunction=compareHashtags)
+
+    return analyzer
 
 # Funciones para agregar informacion al catalogo
+
+def addEvent(analyzer, event):
+    """
+    Añade los eventos a la lista de eventos del analyzer
+    """
+    lt.addLast(analyzer['Eventos'], event)
+    return analyzer
+
+def addEventAnalisis(analyzer, event):
+    """
+    Añade los análisis de los eventos a la lista de AnalisisEventos del analyzer
+    """
+    lt.addLast(analyzer['AnalisisEventos'], event)
+    return analyzer
+
+def addhashtag(analyzer, hashtag)
+    """
+    Añade al map de Hashtags un diccionario con el nombre del hashtag y su informacion
+    """
+    hass = analyzer["Hashtags"]
+    hashy = hashtag['hashtag']
+    existhashhash = mp.contains(hass, hashy) #revisa si el map "hass" contiene la llave "hashy" (el hashtag) y retorna true o false
+    if existhashhash:                       #el "if" inicia si "existhashash" es true
+        toxic = mp.get(hass, hashy)     #"toxic" guarda la pareja (llave,valor) de la llave "hasy" (el pais)
+        eltag = me.getValue(toxic)      #retorna el Valor de la pareja llave,valor que retorna "toxic"
+    else:                              #si el map "hass" no tiene la llave "hashy" entonces se ejecuta este "else"
+        eltag = newHashtagEntry(hashy)         #"pais" guarda el diccionario que retorna la funcion "newVidPais()" con "pai" como valor del key "pais"
+        mp.put(hass, hashy, eltag)       #pone en el map "hass", en la llave "hashy" el dict "pais"
+    lt.addLast(eltag["Hashtag"], video)  #añade un nuevo a la lista que esta dentro de la llave "videos" en el dict "pais"
+
+
+
+
+
+def newHashtagEntry(hashtag, event):
+    """
+    Crea un diccionario para agregar cada hashtag con su información en el map Hashtags del analyzer.
+    """
+    hashentry = {'Hashtag': None, 'HashtagInfo': None}
+    hashentry['offense'] = hashtag
+    hashentry['lstoffenses'] = lt.newList('ARRAY_LIST', compareOffenses)
+    return hashentry
+
+
 
 # Funciones para creacion de datos
 
@@ -48,3 +114,25 @@ los mismos.
 # Funciones utilizadas para comparar elementos dentro de una lista
 
 # Funciones de ordenamiento
+def compareIds(id1, id2):
+    """
+    Compara dos Ids
+    """
+    if (id1 == id2):
+        return 0
+    elif id1 > id2:
+        return 1
+    else:
+        return -1
+
+
+def compareHashtags(hashtag1, hashtag2):
+    """
+    Compara dos etiquetas
+    """
+    if (hashtag1 == hashtag2):
+        return 0
+    elif (hashtag1 > hashtag2):
+        return 1
+    else:
+        return -1
