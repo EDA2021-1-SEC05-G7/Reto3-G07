@@ -27,9 +27,8 @@
 
 import config as cf
 from DISClib.ADT import list as lt
-from DISClib.ADT import map as m
+from DISClib.ADT import map as mp
 from DISClib.DataStructures import mapentry as me
-from DISClib.ADT import orderedmap as om
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
@@ -39,7 +38,6 @@ los mismos.
 """
 
 # Construccion de modelos
-
 def newAnalyzer():
     """ Inicializa el analizador
 
@@ -134,121 +132,14 @@ def newOffenseEntry(offensegrp, crime):
     return ofentry
 
 #............#
-"""def newAnalyzer():
-   """ """ Inicializa el analizador
-
-    Crea una lista vacia para guardar todos los eventos y 
-    los analisis de los eventos. Además se crea un mapa que
-    guarda los hashtags
-
-    Retorna el analizador inicializado.
-    """"""
-    analyzer = {'Eventos': None,
-                'AnalisisEventos': None,
-                'HashTags': None
-                }
-
-    analyzer['Eventos'] = lt.newList('ARRAY_LIST', compareIds)
-
-    analyzer['AnalisisEventos'] = om.newMap(omaptype='RBT',
-                                      comparefunction=compareEvent)
-
-    analyzer['Hashtags'] = om.newMap(omaptype='RBT',
-                                      comparefunction=compareHashtags)
-
-    return analyzer
-
-# Funciones para agregar informacion al catalogo
-
-def addEvent(analyzer, event):
-    """
-"""    Añade los eventos a la lista de eventos del analyzer
-"""    """
-    lt.addLast(analyzer['Eventos'], event)
-    return analyzer
-
-def addEventAnalisis(analyzer, event):
-    """
-"""    Añade los análisis de los eventos a la lista de AnalisisEventos del analyzer
-"""    """
-    inst = analyzer["AnalisisEventos"]
-    eve = event["instrumentalness"]
-    entry = om.get(inst,eve)
-    if entry is None:
-        neweve = newEventEntry(eve)
-        om.put(inst,eve, neweve)
-
-    return analyzer
-def newEventEntry(event):
-
-def addhashtag(analyzer, hashtag):
-    """
-"""    Añade al map de Hashtags un diccionario con el nombre del hashtag y su informacion
-"""    """
-    hass = analyzer["Hashtags"]
-    hashy = hashtag['hashtag']
-    existhashhash = om.get(hass, hashy)
-    if existhashhash is None:
-        eltag = newHashtagEntry(hashy)
-        om.put(hass, hashy, eltag)
-    else: 
-        toxic = mp.get(hass, hashy)
-        eltag = me.getValue(toxic)
-        lt.addLast(eltag["HashtagInfo"], hashtag)  #añade un nuevo a la lista que esta dentro de la llave "videos" en el dict "pais"
-
-def newHashtagEntry(hashtag):
-    """
-"""    Crea un diccionario para agregar cada hashtag con su información en el map Hashtags del analyzer.
-"""    """
-    hashentry = {'Hashtag': None, 'HashtagInfo': None}
-    hashentry['offense'] = hashtag
-    hashentry['lstoffenses'] = lt.newList('ARRAY_LIST', compareHashtags)
-    return hashentry
-"""
-#............#
-
 
 # Funciones para creacion de datos
 
 # Funciones de consulta
 
-def crimesSize(analyzer):
-    """
-    Número de crimenes
-    """
-    return lt.size(analyzer)
-
-
-def indexHeight(analyzer):
-    """
-    Altura del arbol
-    """
-    return om.height(analyzer)
-
-
-def indexSize(analyzer):
-    """
-    Numero de elementos en el indice
-    """
-    return om.size(analyzer)
-
-
-def minKey(analyzer):
-    """
-    Llave mas pequena
-    """
-    return om.minKey(analyzer)
-
-def maxKey(analyzer):
-
-    return om.maxKey(analyzer)
-
-
-
-
 # Funciones utilizadas para comparar elementos dentro de una lista
 
-
+# Funciones de ordenamiento
 def compareIds(id1, id2):
     """
     Compara dos Ids
@@ -271,18 +162,3 @@ def compareHashtags(hashtag1, hashtag2):
         return 1
     else:
         return -1
-
-def compareEvent(event1, event2):
-    """
-    Compara dos eventos
-
-    """
-
-    if (event1 == event2):
-        return 0
-    elif (event1 > event2):
-        return 1
-    else:
-        return -1
-
-# Funciones de ordenamiento
