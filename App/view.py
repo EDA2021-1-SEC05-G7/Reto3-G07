@@ -47,7 +47,7 @@ def printMenu():
     print("0- Salir")
     print("*******************************************")
 
-catalog = None
+analyzer = None
 
 """
 Menu principal
@@ -59,16 +59,24 @@ while True:
     if int(inputs[0]) == 1:
         #Inicializar el analizador
         print("Inicializando...")
-        #Se carga el catalogo que se va a usar de aqui en adelante
-        catalog = controller.iniciar()
+        #Se carga el analyzer que se va a usar de aqui en adelante
+        analyzer = controller.iniciar()
         
     
     elif int(inputs[0]) == 2:
         #Carga de datos
+        """controller.loadEventAnalisis(analyzer)"""
+        controller.loadEvents(analyzer)
+        """controller.loadHashtags(analyzer)"""
+        """print(analyzer["HashTags"])"""
+        
         print("Cargando información de los archivos ...")
+
 
     elif int(inputs[0]) == 3:
         #Requerimiento 1
+        print('Altura del arbol: ' + str(controller.indexHeight(analyzer['eventkind'])))
+        print('Elementos en el arbol: ' + str(controller.indexSize(analyzer['eventkind'])))
         pass
 
     elif int(inputs[0]) == 4:
