@@ -53,7 +53,7 @@ def newAnalyzer():
                 'eventkind': None
                 }
 
-    analyzer['events'] = lt.newList('SINGLE_LINKED', compareIds)
+    analyzer['events'] = lt.newList('ARRAY_LIST', compareIds)
     analyzer['eventkind'] = om.newMap(omaptype='RBT',
                                       comparefunction=compareEvent)
     return analyzer
@@ -117,9 +117,9 @@ def newDataEntry(crime):
     binario.
     """
     entry = {'eventIndex': None, 'lstevents': None}
-    entry['eventIndex'] = m.newMap(numelements=30,
-                                     maptype='PROBING')
-    entry['lstevents'] = lt.newList('SINGLE_LINKED')
+    entry['eventIndex'] = m.newMap(numelements=10000000,
+                                     maptype='CHAINING')
+    entry['lstevents'] = lt.newList('ARRAY_LIST')
     return entry
 
 

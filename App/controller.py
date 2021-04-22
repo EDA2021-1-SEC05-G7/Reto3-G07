@@ -60,7 +60,7 @@ def loadEvents(analyzer):
     for event in input_file:
         model.addEventAnalisis(analyzer, event)
     return analyzer
-    
+
 def loadHashtags(analyzer):
     
     Carga los datos de los archivos CSV sentiment_values en el modelo
