@@ -43,35 +43,26 @@ def loadEvents(analyzer):
     """
     Carga los datos de los archivos CSV user_track_hashtag_timestamp-small en el modelo
     """
-    userfile = cf.data_dir + "user_track_hashtag_timestamp-small.csv"
+    userfile = cf.data_dir + "context_content_features-small.csv"
     input_file = csv.DictReader(open(userfile, encoding="utf-8"),
                                 delimiter=",")
     for event in input_file:
-        model.addEvent(analyzer, event)
+        model.addCrime(analyzer, event)
     return analyzer
 
-def loadEventAnalisis(analyzer, contextfile):
-    """
-    Carga los datos de los archivos CSV context_content_features-small en el modelo
-    """
-    contextfile = cf.data_dir + "context_content_features-small.csv"
-    input_file = csv.DictReader(open(contextfile, encoding="utf-8"),
-                                delimiter=",")
-    for event in input_file:
-        model.addEventAnalisis(analyzer, event)
-    return analyzer
-
-def loadHashtags(analyzer):
-    """
-    Carga los datos de los archivos CSV sentiment_values en el modelo
-    """
-    hashtagfile = cf.data_dir + "sentiment_values.csv"
-    input_file = csv.DictReader(open(hashtagfile, encoding="utf-8"),
-                                delimiter=",")
-    for event in input_file:
-        #model.addCrime(analyzer, event)
-    return analyzer
 
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
+
+def indexHeight(analyzer):
+    return model.indexHeight(analyzer)
+
+def indexSize(analyzer):
+    return model.indexSize(analyzer)
+
+def minKey(analyzer):
+    return model.minKey(analyzer)
+
+def maxKey(analyzer):
+    return model.maxKey(analyzer)

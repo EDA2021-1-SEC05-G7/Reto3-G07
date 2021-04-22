@@ -27,8 +27,9 @@
 
 import config as cf
 from DISClib.ADT import list as lt
-from DISClib.ADT import map as mp
+from DISClib.ADT import map as m
 from DISClib.DataStructures import mapentry as me
+from DISClib.ADT import orderedmap as om
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
@@ -38,6 +39,7 @@ los mismos.
 """
 
 # Construccion de modelos
+
 def newAnalyzer():
     """ Inicializa el analizador
 
@@ -115,8 +117,8 @@ def newDataEntry(crime):
     binario.
     """
     entry = {'eventIndex': None, 'lstevents': None}
-    entry['eventIndex'] = m.newMap(numelements=10000000,
-                                     maptype='CHAINING')
+    entry['eventIndex'] = m.newMap(numelements=30,
+                                     maptype='PROBING')
     entry['lstevents'] = lt.newList('ARRAY_LIST')
     return entry
 
@@ -128,18 +130,52 @@ def newOffenseEntry(offensegrp, crime):
     """
     ofentry = {'event': None, 'eventlist': None}
     ofentry['event'] = offensegrp
-    ofentry['eventlist'] = lt.newList('SINGLELINKED', compareEvent)
+    ofentry['eventlist'] = lt.newList('ARRAY_LIST', compareEvent)
     return ofentry
 
-#............#
+
 
 # Funciones para creacion de datos
 
 # Funciones de consulta
 
+def crimesSize(analyzer):
+    """
+    Número de crimenes
+    """
+    return lt.size(analyzer)
+
+
+def indexHeight(analyzer):
+    """
+    Altura del arbol
+    """
+    return om.height(analyzer)
+
+
+def indexSize(analyzer):
+    """
+    Numero de elementos en el indice
+    """
+    return om.size(analyzer)
+
+
+def minKey(analyzer):
+    """
+    Llave mas pequena
+    """
+    return om.minKey(analyzer)
+
+def maxKey(analyzer):
+
+    return om.maxKey(analyzer)
+
+
+
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 
-# Funciones de ordenamiento
+
 def compareIds(id1, id2):
     """
     Compara dos Ids
@@ -162,3 +198,18 @@ def compareHashtags(hashtag1, hashtag2):
         return 1
     else:
         return -1
+
+def compareEvent(event1, event2):
+    """
+    Compara dos eventos
+
+    """
+
+    if (event1 == event2):
+        return 0
+    elif (event1 > event2):
+        return 1
+    else:
+        return -1
+
+# Funciones de ordenamiento
