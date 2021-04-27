@@ -39,7 +39,7 @@ def iniciar():
     return analizator
 
 # Funciones para la carga de datos
-def loadEvents(analyzer):
+def loadEvents(analyzer,tipo):
     """
     Carga los datos de los archivos CSV user_track_hashtag_timestamp-small en el modelo
     """
@@ -47,8 +47,41 @@ def loadEvents(analyzer):
     input_file = csv.DictReader(open(userfile, encoding="utf-8"),
                                 delimiter=",")
     for event in input_file:
-        model.addCrime(analyzer, event)
+        newdict = {"instrumentalness":event["instrumentalness"],
+        "liveness":event["liveness"],
+        "speechiness":event["speechiness"],
+        "danceability":event["danceability"],
+        "valence":event["valence"],
+        "loudness":event["loudness"],
+        "tempo":event["tempo"],
+        "acousticness":event["acousticness"],
+        "energy":event["energy"],
+        "mode":event["mode"],
+        "key":event["key"],
+        "artist_id":event["artist_id"],
+        "tweet_lang":event["tweet_lang"],
+        "track_id":event["track_id"],
+        "created_at":event["created_at"],
+        "lang":event["lang"],
+        "time_zone":event["time_zone"],
+        "user_id":event["user_id"],
+        "id":event["id"]
+        }
+        #prueba
+        """newdict = {tipo:event[tipo],"id":event["id"]}
+        print(newdict)"""
+        model.addCrime(analyzer, newdict, tipo)
+    cantidad = len(tipo)
+    mases = cantidad*"-"
+    print(mases,".....>")
+    print(tipo, "check")
+    print(mases,".....>")
     return analyzer
+
+# Requerimientos
+
+def req1(analyzer,carac,mink,maxk):
+    return model.req1(analyzer,carac,mink,maxk)
 
 
 # Funciones de ordenamiento

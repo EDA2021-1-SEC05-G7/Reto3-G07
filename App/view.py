@@ -61,23 +61,33 @@ while True:
         print("Inicializando...")
         #Se carga el analyzer que se va a usar de aqui en adelante
         analyzer = controller.iniciar()
-        
-    
+        for llaves in analyzer:
+            print(llaves)
     elif int(inputs[0]) == 2:
         #Carga de datos
         """controller.loadEventAnalisis(analyzer)"""
-        controller.loadEvents(analyzer)
-        """controller.loadHashtags(analyzer)"""
-        """print(analyzer["HashTags"])"""
+        lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy"]
+        """for i in lists:"""
+        controller.loadEvents(analyzer,"tempo")
         
         print("Cargando información de los archivos ...")
 
 
     elif int(inputs[0]) == 3:
         #Requerimiento 1
-        print('Altura del arbol: ' + str(controller.indexHeight(analyzer['eventkind'])))
-        print('Elementos en el arbol: ' + str(controller.indexSize(analyzer['eventkind'])))
+        carac = input("¿Cual es la caracteristica de contenido que desea conocer? ")
+        mink = input("Introduzca el valor mínimo de la característica de contenido que desea saber ")
+        maxk = input("Introduzca el valor maximo de la característica de contenido que desea saber ")
+        print('Altura del arbol: ' + str(controller.indexHeight(analyzer[carac])))
+        print('Elementos en el arbol: ' + str(controller.indexSize(analyzer[carac])))
+        print("Min key: ", str(controller.minKey(analyzer[carac])))
+        print("Max key: ", str(controller.maxKey(analyzer[carac])))
+        result = controller.req1(analyzer,carac,mink,maxk)
+        print(lt.firstElement(result))
+        print(lt.lastElement(result))
+        print(lt.size(result))
         pass
+        
 
     elif int(inputs[0]) == 4:
         #Requerimiento 2

@@ -49,28 +49,28 @@ def newAnalyzer():
 
     Retorna el analizador inicializado.
     """
-    analyzer = {'events': None,
-                'eventkind': None
-                }
-
-    analyzer['events'] = lt.newList('ARRAY_LIST', compareIds)
-    analyzer['eventkind'] = om.newMap(omaptype='RBT',
-                                      comparefunction=compareEvent)
+    analyzer = {'events': None}
+    lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy"]
+    for i in lists:
+        analyzer[i] = om.newMap(omaptype='RBT',
+                                        comparefunction=compareEvent)
+                    
+        analyzer['events'] = lt.newList('ARRAY_LIST', compareIds)
     return analyzer
 
 
 # Funciones para agregar informacion al catalogo
 
 
-def addCrime(analyzer, crime):
+def addCrime(analyzer, crime, tipo):
     """
     """
     lt.addLast(analyzer['events'], crime)
-    updateDateIndex(analyzer['eventkind'], crime)
+    updateDateIndex(analyzer[tipo], crime,tipo)
     return analyzer
 
 
-def updateDateIndex(map, crime):
+def updateDateIndex(map, crime, tipo):
     """
     Se toma la fecha del crimen y se busca si ya existe en el arbol
     dicha fecha.  Si es asi, se adiciona a su lista de crimenes
@@ -79,18 +79,18 @@ def updateDateIndex(map, crime):
     Si no se encuentra creado un nodo para esa fecha en el arbol
     se crea y se actualiza el indice de tipos de crimenes
     """
-    occurreddate = crime['instrumentalness']
+    occurreddate = crime[tipo]
     entry = om.get(map, occurreddate)
     if entry is None:
         datentry = newDataEntry(crime)
         om.put(map, occurreddate, datentry)
     else:
         datentry = me.getValue(entry)
-    addDateIndex(datentry, crime)
+    addDateIndex(datentry, crime,tipo)
     return map
 
 
-def addDateIndex(datentry, crime):
+def addDateIndex(datentry, crime,tipo):
     """
     Actualiza un indice de tipo de crimenes.  Este indice tiene una lista
     de crimenes y una tabla de hash cuya llave es el tipo de crimen y
@@ -100,11 +100,11 @@ def addDateIndex(datentry, crime):
     lst = datentry['lstevents']
     lt.addLast(lst, crime)
     offenseIndex = datentry['eventIndex']
-    offentry = m.get(offenseIndex, crime['instrumentalness'])
+    offentry = m.get(offenseIndex, crime[tipo])
     if (offentry is None):
-        entry = newOffenseEntry(crime['instrumentalness'], crime)
+        entry = newOffenseEntry(crime[tipo], crime)
         lt.addLast(entry['eventlist'], crime)
-        m.put(offenseIndex, crime['instrumentalness'], entry)
+        m.put(offenseIndex, crime[tipo], entry)
     else:
         entry = me.getValue(offentry)
         lt.addLast(entry['eventlist'], crime)
@@ -136,6 +136,14 @@ def newOffenseEntry(offensegrp, crime):
 
 
 # Funciones para creacion de datos
+
+# Requerimientos
+
+def req1(analyzer,carac,mink,maxk):
+    llaves = om.values(analyzer[carac],mink,maxk)
+    print(llaves)
+    print("aaaa")
+
 
 # Funciones de consulta
 
