@@ -83,9 +83,9 @@ while True:
         print("Min key: ", str(controller.minKey(analyzer[carac])))
         print("Max key: ", str(controller.maxKey(analyzer[carac])))
         result = controller.req1(analyzer,carac,mink,maxk)
-        print(lt.firstElement(result))
+        """print(lt.firstElement(result))
         print(lt.lastElement(result))
-        print(lt.size(result))
+        print(lt.size(result))"""
         pass
         
 

@@ -31,6 +31,8 @@ from DISClib.ADT import map as m
 from DISClib.DataStructures import mapentry as me
 from DISClib.ADT import orderedmap as om
 from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.DataStructures import listiterator as it
+from pprint import pprint as pprint
 assert cf
 
 """
@@ -141,8 +143,13 @@ def newOffenseEntry(offensegrp, crime):
 
 def req1(analyzer,carac,mink,maxk):
     llaves = om.values(analyzer[carac],mink,maxk)
-    print(llaves)
-    print("aaaa")
+    iterator = it.newIterator(llaves)
+    while it.hasNext(iterator):
+        element = it.next(iterator)
+        print(element["key"]=="1")
+        """pprint(element)"""
+    return llaves
+
 
 
 # Funciones de consulta
