@@ -210,6 +210,19 @@ def req2(analyzer,mne,mxe,mnd,mxd):
         print("Track",i+1,":", el["track_id"],"with energy of",el["energy"],"and danceability of",el["danceability"])
         i += 1
     return None
+
+
+
+
+
+def req3(analyzer, minimus, magnus, minima, magna):
+    clavis = om.values(analyzer["instrumentalness"], minimus, magnus)
+    """clavis contiene los valores de los eventos con instrumentalness entre el rango minimus y magnus"
+    
+
+
+
+
 # Funciones de consulta
 
 def crimesSize(analyzer):

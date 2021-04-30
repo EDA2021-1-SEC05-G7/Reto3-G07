@@ -37,11 +37,11 @@ operación solicitada
 def printMenu():
     print("*******************************************")
     print("Bienvenido")
-    print("1- Inicializar el analizador")
-    print("2- Cargar información en el catálogo")
-    print("3- Caracterizar las reproducciónes")
-    print("4- Encontrar musica para festejar")
-    print("5- ")
+    print("1- Inicializar el analizador.")
+    print("2- Cargar información en el catálogo.")
+    print("3- Caracterizar las reproducciónes.")
+    print("4- Encontrar musica para festejar.")
+    print("5- Encontar música para estudiar.")
     print("6- ")
     print("7- ")
     print("0- Salir")
@@ -99,8 +99,13 @@ while True:
 
     elif int(inputs[0]) == 5:
         #Requerimiento 3
-        pass
+        minimus = float(input("Introduzca el valor mínimo del rango para 'instrumentalness': \n"))
+        magnus = float(input("Introduzca el valor máximo del rango para 'instrumentalness': \n"))
+        minima = float(input("Introduzca el valor mínimo del rango para 'tempo': \n"))
+        magna = float(input("Introduzca el valor máximo del rango para 'tempo': \n"))
+        controller.req3(analyzer, minimus, magnus, minima, magna)
 
+        
     elif int(inputs[0]) == 6:
         #Requerimiento 4
         pass

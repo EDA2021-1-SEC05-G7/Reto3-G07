@@ -42,7 +42,7 @@ def iniciar():
 # Funciones para la carga de datos
 def loadEvents(analyzer,tipo):
     """
-    Carga los datos de los archivos CSV user_track_hashtag_timestamp-small en el modelo
+    Carga los datos de los archivos CSV context_content_features-small-small en el modelo
     """
     userfile = cf.data_dir + "context_content_features-small.csv"
 
@@ -89,6 +89,9 @@ def req1(analyzer,carac,mink,maxk):
 
 def req2(analyzer,mne,mxe,mnd,mxd):
     return model.req2(analyzer,mne,mxe,mnd,mxd)
+
+def req3(analyzer, minimus, magnus, minima, magna):
+    return model.req3(analyzer, minimus, magnus, minima, magna)
 
 
 # Funciones de ordenamiento
