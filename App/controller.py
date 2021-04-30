@@ -48,7 +48,6 @@ def loadEvents(analyzer,tipo):
 
     input_file = csv.DictReader(open(userfile, encoding="utf-8"),
                                 delimiter=",")
-    i = 0
     for event in input_file:
         newdict = {"instrumentalness":float(event["instrumentalness"]),
         "liveness":float(event["liveness"]),

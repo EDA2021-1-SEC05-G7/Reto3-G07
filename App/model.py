@@ -198,13 +198,16 @@ def req2(analyzer,mne,mxe,mnd,mxd):
     print("++++++ Req 2. results... ++++++")
     print("Energy is between",mne,"and",mxe)
     print("Danceability is between",mnd,"and",mxd)
-    print("Total of unique tracks in events:", m.size(listt),"\n")
+    tamaño = m.size(listt)
+    print("Total of unique tracks in events:", tamaño,"\n")
+    if tamaño == 0:
+        pass
     print("--- Unique track_id ---")
     newkk = m.valueSet(listt)
     i = 0
     while i <= 4:
         el = lt.getElement(newkk,randint(0,lt.size(newkk)))
-        print("Track",i+1,":", el["track_id"],"whit energy of",el["energy"],"and danceability of",el["danceability"])
+        print("Track",i+1,":", el["track_id"],"with energy of",el["energy"],"and danceability of",el["danceability"])
         i += 1
     return None
 # Funciones de consulta

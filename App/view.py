@@ -85,7 +85,6 @@ while True:
         (a,b) = controller.req1(analyzer,carac,mink,maxk)
         print("total repro",a,"artistas",b)
         
-        pass
         
 
     elif int(inputs[0]) == 4:
