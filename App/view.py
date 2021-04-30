@@ -40,7 +40,7 @@ def printMenu():
     print("1- Inicializar el analizador")
     print("2- Cargar información en el catálogo")
     print("3- Caracterizar las reproducciónes")
-    print("4- ")
+    print("4- Encontrar musica para festejar")
     print("5- ")
     print("6- ")
     print("7- ")
@@ -67,8 +67,8 @@ while True:
         #Carga de datos
         """controller.loadEventAnalisis(analyzer)"""
         lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy"]
-        """for i in lists:"""
-        controller.loadEvents(analyzer,"tempo")
+        for i in lists:
+            controller.loadEvents(analyzer,i)
         
         print("Cargando información de los archivos ...")
 
@@ -76,21 +76,26 @@ while True:
     elif int(inputs[0]) == 3:
         #Requerimiento 1
         carac = input("¿Cual es la caracteristica de contenido que desea conocer? ")
-        mink = input("Introduzca el valor mínimo de la característica de contenido que desea saber ")
-        maxk = input("Introduzca el valor maximo de la característica de contenido que desea saber ")
+        mink = float(input("Introduzca el valor mínimo de la característica de contenido que desea saber "))
+        maxk = float(input("Introduzca el valor maximo de la característica de contenido que desea saber "))
         print('Altura del arbol: ' + str(controller.indexHeight(analyzer[carac])))
-        print('Elementos en el arbol: ' + str(controller.indexSize(analyzer[carac])))
+        print('Elementos en el arbol: ' + str(controller.indexSize(analyzer["events"])))
         print("Min key: ", str(controller.minKey(analyzer[carac])))
         print("Max key: ", str(controller.maxKey(analyzer[carac])))
-        result = controller.req1(analyzer,carac,mink,maxk)
-        """print(lt.firstElement(result))
-        print(lt.lastElement(result))
-        print(lt.size(result))"""
+        (a,b) = controller.req1(analyzer,carac,mink,maxk)
+        print("total repro",a,"artistas",b)
+        
         pass
         
 
     elif int(inputs[0]) == 4:
         #Requerimiento 2
+        mne = float(input("Introduzca el valor minimo de 'energy':\n"))
+        mxe = float(input("Introduzca el valor máximo de 'energy':\n"))
+        mnd = float(input("Introduzca el valor minimo de 'danceability':\n"))
+        mxd = float(input("Introduzca el valor minimo de 'danceability':\n"))
+        controller.req2(analyzer,mne,mxe,mnd,mxd)
+
         pass
 
     elif int(inputs[0]) == 5:

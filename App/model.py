@@ -32,7 +32,8 @@ from DISClib.DataStructures import mapentry as me
 from DISClib.ADT import orderedmap as om
 from DISClib.Algorithms.Sorting import shellsort as sa
 from DISClib.DataStructures import listiterator as it
-from pprint import pprint as pprint
+from pprint import pprint 
+from random import randint
 assert cf
 
 """
@@ -143,15 +144,69 @@ def newOffenseEntry(offensegrp, crime):
 
 def req1(analyzer,carac,mink,maxk):
     llaves = om.values(analyzer[carac],mink,maxk)
+    # llaves: extrae una lista de los valores en el rango dado del arbol
     iterator = it.newIterator(llaves)
+    # iterator: crea un iterador para la lista llaves
+    contador = m.newMap(numelements= lt.size(llaves),maptype="CHAINING",loadfactor=2)
+    # contador: mapa - tabla de hash, donde se van a almacenar los datos de las canciones, con los artistas como llaves
+    contador2 = 0
+    # contador2: var que llevará la cuenta de cuantas canciones se van añadiendo
     while it.hasNext(iterator):
         element = it.next(iterator)
-        print(element["key"]=="1")
-        """pprint(element)"""
-    return llaves
+        # element: var que toma como valor cada elemento dentro de la lista llaves (ver ss1)
+        kset = m.keySet(element["eventIndex"])
+        # kset: lista con los valores dentro de la tabla de hash "eventIndex" dentro de cada elemento guardado en element (ver linea 124,ss2)
+        itit = it.newIterator(kset)
+        # itit: nuevo iterador para la lista de los valores del map "eventIndex"
+        while it.hasNext(itit):
+            elel = it.next(itit)
+            dic = me.getValue(m.get(element["eventIndex"],elel))
+            # dic: el diccionario con dos llaves: event->el valor numerico, eventlist: la lista con los events con ese valor
+            contador2 += lt.size(dic["eventlist"])
+            # se agrega al contador la cantidad de elementos que tenga la lista eventlist equivalente a la cantidad de events que hay con ese valor numerico
+            itr = it.newIterator(dic["eventlist"])
+            #itr: nuevo iterador para la lista de los eventos en con ese valor
+            while it.hasNext(itr):
+                elell = it.next(itr)
+                # cada valor numerico dentro del rango, siendo un diccionario cuyo valor es toda la informacion relacionada a ese numero en el rango (controller->newdict)
+                m.put(contador,elell["artist_id"],0)
+                # se inserta dentro de la tabla de hash, un elemento con cada iteracion en la lista de events relacionado a un rango, cuya llave es el artist id con la final de que se sobreescriban los datos para conocer el tamaño final de la tabla y asi saber la cantidad de artistas sin repetirse
+    (a,b) = (contador2,m.size(contador))  
+    # tupla con la cantidad de events en total y la cantidad total de artists
+    return (a,b)
 
-
-
+def req2(analyzer,mne,mxe,mnd,mxd):
+    llaves = om.values(analyzer["energy"],mne,mxe)
+    """lista con valores dentro del rango en arbole energy"""
+    listt =  m.newMap(numelements= lt.size(llaves),maptype="CHAINING",loadfactor=2)
+    iterator = it.newIterator(llaves)
+    """ iterador para la lista de valores en arbol energy (llaves)"""
+    while it.hasNext(iterator):
+        element = it.next(iterator)
+        kse = m.keySet(element["eventIndex"])
+        """lista con valores de tabla de hash contenida en cada elemento"""
+        itt = it.newIterator(kse)
+        while it.hasNext(itt):
+            newel = it.next(itt)
+            dit = me.getValue(m.get(element["eventIndex"],newel))
+            newit = it.newIterator(dit["eventlist"])
+            while it.hasNext(newit):
+                nnewl = it.next(newit)
+                vd = nnewl["danceability"]
+                if  vd >= mnd and vd <= mxd:
+                    m.put(listt,nnewl["track_id"],nnewl)
+    print("++++++ Req 2. results... ++++++")
+    print("Energy is between",mne,"and",mxe)
+    print("Danceability is between",mnd,"and",mxd)
+    print("Total of unique tracks in events:", m.size(listt),"\n")
+    print("--- Unique track_id ---")
+    newkk = m.valueSet(listt)
+    i = 0
+    while i <= 4:
+        el = lt.getElement(newkk,randint(0,lt.size(newkk)))
+        print("Track",i+1,":", el["track_id"],"whit energy of",el["energy"],"and danceability of",el["danceability"])
+        i += 1
+    return None
 # Funciones de consulta
 
 def crimesSize(analyzer):
@@ -172,7 +227,7 @@ def indexSize(analyzer):
     """
     Numero de elementos en el indice
     """
-    return om.size(analyzer)
+    return lt.size(analyzer)
 
 
 def minKey(analyzer):

@@ -23,6 +23,7 @@
 import config as cf
 import model
 import csv
+from pprint import pprint
 
 
 """
@@ -44,18 +45,20 @@ def loadEvents(analyzer,tipo):
     Carga los datos de los archivos CSV user_track_hashtag_timestamp-small en el modelo
     """
     userfile = cf.data_dir + "context_content_features-small.csv"
+
     input_file = csv.DictReader(open(userfile, encoding="utf-8"),
                                 delimiter=",")
+    i = 0
     for event in input_file:
-        newdict = {"instrumentalness":event["instrumentalness"],
-        "liveness":event["liveness"],
-        "speechiness":event["speechiness"],
-        "danceability":event["danceability"],
-        "valence":event["valence"],
-        "loudness":event["loudness"],
-        "tempo":event["tempo"],
-        "acousticness":event["acousticness"],
-        "energy":event["energy"],
+        newdict = {"instrumentalness":float(event["instrumentalness"]),
+        "liveness":float(event["liveness"]),
+        "speechiness":float(event["speechiness"]),
+        "danceability":float(event["danceability"]),
+        "valence":float(event["valence"]),
+        "loudness":float(event["loudness"]),
+        "tempo":float(event["tempo"]),
+        "acousticness":float(event["acousticness"]),
+        "energy":float(event["energy"]),
         "mode":event["mode"],
         "key":event["key"],
         "artist_id":event["artist_id"],
@@ -71,17 +74,22 @@ def loadEvents(analyzer,tipo):
         """newdict = {tipo:event[tipo],"id":event["id"]}
         print(newdict)"""
         model.addCrime(analyzer, newdict, tipo)
+    
     cantidad = len(tipo)
     mases = cantidad*"-"
     print(mases,".....>")
     print(tipo, "check")
     print(mases,".....>")
+
     return analyzer
 
 # Requerimientos
 
 def req1(analyzer,carac,mink,maxk):
     return model.req1(analyzer,carac,mink,maxk)
+
+def req2(analyzer,mne,mxe,mnd,mxd):
+    return model.req2(analyzer,mne,mxe,mnd,mxd)
 
 
 # Funciones de ordenamiento
@@ -99,3 +107,12 @@ def minKey(analyzer):
 
 def maxKey(analyzer):
     return model.maxKey(analyzer)
+
+
+#pruebas
+
+"""analyzer = iniciar()
+data = loadEvents(analyzer,"instrumentalness")
+data = loadEvents(analyzer,"energy")
+data = loadEvents(analyzer,"danceability")
+print("reqcontrol",model.req2(analyzer,0.5,0.75,0.75,1))"""
