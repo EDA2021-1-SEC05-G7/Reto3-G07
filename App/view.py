@@ -66,7 +66,8 @@ while True:
     elif int(inputs[0]) == 2:
         #Carga de datos
         """controller.loadEventAnalisis(analyzer)"""
-        lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy"]
+        #lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy"]
+        lists = ["instrumentalness", "tempo"]
         for i in lists:
             controller.loadEvents(analyzer,i)
         
