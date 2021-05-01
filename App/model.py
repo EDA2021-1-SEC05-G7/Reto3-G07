@@ -218,6 +218,9 @@ def req2(analyzer,mne,mxe,mnd,mxd):
 def req3(analyzer, minimus, magnus, minima, magna):
     #print("teodio:3")
     clavis = om.values(analyzer["instrumentalness"],minimus,magnus)
+    if lt.size(clavis) == 0:
+        print("El rango de instrumentalness es invalido. Por favor ingreselo de nuevo \n")
+        return None
     #print(analyzer["instrumentalness"])
     """clavis contiene los valores de los eventos con instrumentalness entre el rango minimus y magnus"""
     inventarium = m.newMap(numelements=lt.size(clavis), maptype="CHAINING", loadfactor=2)
@@ -241,11 +244,13 @@ def req3(analyzer, minimus, magnus, minima, magna):
                 tempus = elementorum["tempo"]
                 if tempus >= minima and tempus <= magna:
                     m.put(inventarium, elementorum["track_id"], elementorum)
-
+    quantitas = m.size(inventarium)
+    if quantitas == 0:
+        print("El rango de tempo es invalido. Por favor ingrese valores dentro del rango \n")
+        return None
     print("°°°°°° Req No. 3 results °°°°°°")
     print("Instrumentalness is between", minimus, "and", magnus)
     print("Tempo is between", minima, "and", magna)
-    quantitas = m.size(inventarium)
     print("Total of unique tracks in events:", quantitas, "\n")
     if quantitas == 0:
         pass

@@ -91,6 +91,7 @@ def req2(analyzer,mne,mxe,mnd,mxd):
     return model.req2(analyzer,mne,mxe,mnd,mxd)
 
 def req3(analyzer, minimus, magnus, minima, magna):
+    
     return model.req3(analyzer, minimus, magnus, minima, magna)
 
 
