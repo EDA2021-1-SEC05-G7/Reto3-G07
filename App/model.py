@@ -217,8 +217,45 @@ def req2(analyzer,mne,mxe,mnd,mxd):
 
 def req3(analyzer, minimus, magnus, minima, magna):
     clavis = om.values(analyzer["instrumentalness"], minimus, magnus)
-    """clavis contiene los valores de los eventos con instrumentalness entre el rango minimus y magnus"
-    
+    """clavis contiene los valores de los eventos con instrumentalness entre el rango minimus y magnus"""
+    inventarium = m.newMap(numelements=lt.size(clavis), maptype="CHAINING", loadfactor=2)
+    """ en inventarium se crea una nueva lista"""
+    iteratio = it.newIterator(clavis)
+    """iteratio crea un iterador que va a iterar la lista clavis"""
+    while it.hasNext(iteratio):
+        """el while va a iterar en los elementos de clavis"""
+        elementi = it.next(iteratio)
+        claustrum = m.keySet(elementi["eventIndex"])
+        """claustrum contiene la lista de las llaves de cada elemento elementi"""
+        iterationis = it.newIterator(claustrum)
+        """iterationis crea un iterador que va a iterar la lista claustrum"""
+        while it.hasNext(iterationis):
+            """el segundo while recorre los elementos en claustrum"""
+            elementum = it.next(iterationis)
+            clostrum = me.getValue(m.get(elementi["eventIndex"], elementum))
+            iterationem = it.newIterator(clostrum["eventlist"])
+            while it.hasNext(iterationem):
+                elementorum = it.hasNext(iterationem)
+                tempus = elementorum["tempo"]
+                if tempus >= minima and tempus <= magna:
+                    m.put(inventarium, elementorum["track_id"], elementorum)
+
+    print("°°°°°° Req No. 3 results °°°°°°")
+    print("Instrumentalness is between", minimus, "and", magnus)
+    print("Tempo is between", minima, "and", magna)
+    quantitas = m.size(inventarium)
+    print("Total of unique tracks in events:", quantitas, "\n")
+    if quantitas == 0:
+        pass
+    print("~~~ Unique track_id ~~~")
+    lekeys = m.valueSet(inventarium)
+    i = 0
+    while i <= 4:
+        aurum = lt.getElement(lekeys, randit(0, lt.size(lekeys)))
+        print("Track", i+1, ":", aurum["track_id"], "with instrumentalness of", aurum["instrumentalness"], "and tempo of", aurum["tempo"])
+        i += 1
+    return None
+                
 
 
 
