@@ -59,15 +59,15 @@ def newAnalyzer():
                                         comparefunction=compareEvent)
                     
     analyzer['events'] = lt.newList('ARRAY_LIST', compareIds)
-    analyzer["generos"] = {"Reggae": [60,90],
-                            "Down-tempo":[70,100],
-                            "Chill-out": [90,120],
-                            "Hip-hop": [85,115],
-                            "Jazz and funk": [120,125],
-                            "Pop": [100,130],
-                            "R&B": [60,80],
-                            "Rock": [110,140],
-                            "Metal": [100,160]}
+    analyzer["generos"] = {"reggae": [60,90],
+                            "down-tempo":[70,100],
+                            "chill-out": [90,120],
+                            "hip-hop": [85,115],
+                            "jazz and funk": [120,125],
+                            "pop": [100,130],
+                            "r&b": [60,80],
+                            "rock": [110,140],
+                            "metal": [100,160]}
     return analyzer
 
 
@@ -180,7 +180,7 @@ def req1(analyzer,carac,mink,maxk):
                 # cada valor numerico dentro del rango, siendo un diccionario cuyo valor es toda la informacion relacionada a ese numero en el rango (controller->newdict)
                 m.put(contador,elell["artist_id"],0)
                 # se inserta dentro de la tabla de hash, un elemento con cada iteracion en la lista de events relacionado a un rango, cuya llave es el artist id con la final de que se sobreescriban los datos para conocer el tamaño final de la tabla y asi saber la cantidad de artistas sin repetirse
-    (a,b) = (contador2,m.size(contador))  
+    (a,b) = (contador2,contador)  
     # tupla con la cantidad de events en total y la cantidad total de artists
     return (a,b)
 
@@ -276,13 +276,44 @@ def req3(analyzer, minimus, magnus, minima, magna):
 
 
 def req4(analyzer,generos):
-    new = generos[-1]
-    if new == None:
-        #eliminar ultimo elemento
-        a = "a"
+    new = generos[-1] 
+    """new guarda el último género añadido sea el que pido el usuario o None si no pidio ninguno"""
+    if new == None: 
+        """Si no se pidio ningún género este se elimina"""
+        del(generos[-1])
+        
     else:
         analyzer["generos"][generos[-1]["name"]] = generos[-1]["rango"]
-        print(analyzer["generos"])
+        generos.append(generos[-1]["name"])
+        del(generos[-2])
+        #print(analyzer["generos"])
+        """si se pidió un nuevo género este se añade a la lista de géneros en analyzer"""
+        totalis = 0
+        """totalis va a guardar el total de reproducciones para todos los generos"""
+        print("°°°°°° Req No. 4 results °°°°°°")
+        
+        for i in generos:
+            """se empieza a recorrer la lista que incluye los géneros pedidos y el nuevo género"""
+            minymag = analyzer["generos"][str(i).lower()] 
+            """minymag guarda los límites máximos y minimos del tempo del genero"""
+            (a,b) = req1(analyzer, "tempo", minymag[0], minymag[1])
+            """la tupla guarda el numero total de reproducciones del genero en a y una lista con los artistas en b"""
+            totalis += int(a)
+            print("========", i.upper(), "========")
+            print("For", i, "the tempo is between ", minymag[0], " and ", minymag[1], " BPM")
+            print(i, "reproductions: ", a, " with ", m.size(b), " different artists")
+            print("~~~~~ Some artists for", i, "~~~~~")
+            lilkeys = m.keySet(b)
+            j = 0
+            while j <= 9:
+                volans = lt.getElement(lilkeys, j)
+                print("Artist ", j+1, ": ", volans)
+                j += 1
+            #print(a, b)
+            
+        print(" \nTotal of reproductions: ", totalis)
+
+        
     return None
 # Funciones de consulta
 

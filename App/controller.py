@@ -24,6 +24,7 @@ import config as cf
 import model
 import csv
 from pprint import pprint
+from DISClib.ADT import map as m
 
 
 """
@@ -85,7 +86,9 @@ def loadEvents(analyzer,tipo):
 # Requerimientos
 
 def req1(analyzer,carac,mink,maxk):
-    return model.req1(analyzer,carac,mink,maxk)
+    (a,b) = model.req1(analyzer,carac,mink,maxk)
+    b = m.size(b)
+    return (a,b)
 
 def req2(analyzer,mne,mxe,mnd,mxd):
     return model.req2(analyzer,mne,mxe,mnd,mxd)

@@ -42,7 +42,7 @@ def printMenu():
     print("3- Caracterizar las reproducciónes.")
     print("4- Encontrar musica para festejar.")
     print("5- Encontar música para estudiar.")
-    print("6- ")
+    print("6- Encontrar características de los géneros y crear un nuevo género")
     print("7- ")
     print("0- Salir")
     print("*******************************************")
@@ -64,19 +64,20 @@ while True:
         for llaves in analyzer:
             print(llaves)
     elif int(inputs[0]) == 2:
+        print("Cargando información de los archivos ...")
+
         #Carga de datos
         """controller.loadEventAnalisis(analyzer)"""
         #lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy"]
-        lists = ["instrumentalness", "tempo"]
+        lists = ["tempo"]
         for i in lists:
             controller.loadEvents(analyzer,i)
         
-        print("Cargando información de los archivos ...")
-
+        
 
     elif int(inputs[0]) == 3:
         #Requerimiento 1
-        carac = input("¿Cual es la caracteristica de contenido que desea conocer? ")
+        carac = (input("¿Cual es la caracteristica de contenido que desea conocer? ")).lower()
         mink = float(input("Introduzca el valor mínimo de la característica de contenido que desea saber "))
         maxk = float(input("Introduzca el valor maximo de la característica de contenido que desea saber "))
         print('Altura del arbol: ' + str(controller.indexHeight(analyzer[carac])))
@@ -108,26 +109,22 @@ while True:
 
         
     elif int(inputs[0]) == 6:
-        generos = (input("Introduzca los generos de los cuales desea saber")).split()
-        nuevo = int(input("Desea crear un nuevo genero? ingrese 1 para si o pulse cualquier tecla para continuar"))
+        generos = (input("Introduzca los géneros de los cuales desea saber las canciones y los artistas separados por comas (,): \n")).split()
+        novus = int(input("¿Desea crear un nuevo género? \nIngrese 1 si sí lo desea crear, o pulse cualquier otra tecla para continuar: \n"))
         newgen = {}
-        if nuevo == 1:
-            nombre = input("introduzca el nombre del nuevo genero")
-            minim = float(input("Introduzca el valor mínimo del tempo para n gen: \n"))
-           #arregar
-            magna = float(input("Introduzca el valor máximo del rango para 'tempo': \n"))
-            newgen["name"] = nombre
-            newgen["rango"] = [minim,magna]
+        if novus == 1:
+            nomen = input("Introduzca el nombre del nuevo género: \n")
+            minimum = float(input("Introduzca el valor mínimo del tempo para este nuevo género: \n"))
+            magnum = float(input("Introduzca el valor máximo del tempo para este nuevo género: \n"))
+            newgen["name"] = nomen
+            newgen["rango"] = [minimum,magnum]
             generos.append(newgen)
             controller.req4(analyzer,generos)
         else:
-            hola = None
-            generos.append(hola)
+            nominis = None
+            generos.append(nominis)
             controller.req4(analyzer,generos)
             
-
-        #Requerimiento 4
-        pass
 
     elif int(inputs[0]) == 7:
         #Requerimiento 5
