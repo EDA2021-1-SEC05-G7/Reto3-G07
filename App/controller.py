@@ -94,6 +94,8 @@ def req3(analyzer, minimus, magnus, minima, magna):
     
     return model.req3(analyzer, minimus, magnus, minima, magna)
 
+def req4(analyzer,generos):
+    model.req4(analyzer,generos)
 
 # Funciones de ordenamiento
 

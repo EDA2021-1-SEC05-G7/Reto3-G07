@@ -108,6 +108,24 @@ while True:
 
         
     elif int(inputs[0]) == 6:
+        generos = (input("Introduzca los generos de los cuales desea saber")).split()
+        nuevo = int(input("Desea crear un nuevo genero? ingrese 1 para si o pulse cualquier tecla para continuar"))
+        newgen = {}
+        if nuevo == 1:
+            nombre = input("introduzca el nombre del nuevo genero")
+            minim = float(input("Introduzca el valor mínimo del tempo para n gen: \n"))
+           #arregar
+            magna = float(input("Introduzca el valor máximo del rango para 'tempo': \n"))
+            newgen["name"] = nombre
+            newgen["rango"] = [minim,magna]
+            generos.append(newgen)
+            controller.req4(analyzer,generos)
+        else:
+            hola = None
+            generos.append(hola)
+            controller.req4(analyzer,generos)
+            
+
         #Requerimiento 4
         pass
 

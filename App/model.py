@@ -58,7 +58,16 @@ def newAnalyzer():
         analyzer[i] = om.newMap(omaptype='RBT',
                                         comparefunction=compareEvent)
                     
-        analyzer['events'] = lt.newList('ARRAY_LIST', compareIds)
+    analyzer['events'] = lt.newList('ARRAY_LIST', compareIds)
+    analyzer["generos"] = {"Reggae": [60,90],
+                            "Down-tempo":[70,100],
+                            "Chill-out": [90,120],
+                            "Hip-hop": [85,115],
+                            "Jazz and funk": [120,125],
+                            "Pop": [100,130],
+                            "R&B": [60,80],
+                            "Rock": [110,140],
+                            "Metal": [100,160]}
     return analyzer
 
 
@@ -219,7 +228,7 @@ def req3(analyzer, minimus, magnus, minima, magna):
     #print("teodio:3")
     clavis = om.values(analyzer["instrumentalness"],minimus,magnus)
     if lt.size(clavis) == 0:
-        print("El rango de instrumentalness es invalido. Por favor ingreselo de nuevo \n")
+        print("El rango de instrumentalness es invalido. Por favor ingrese valores validos \n")
         return None
     #print(analyzer["instrumentalness"])
     """clavis contiene los valores de los eventos con instrumentalness entre el rango minimus y magnus"""
@@ -266,7 +275,15 @@ def req3(analyzer, minimus, magnus, minima, magna):
 
 
 
-
+def req4(analyzer,generos):
+    new = generos[-1]
+    if new == None:
+        #eliminar ultimo elemento
+        a = "a"
+    else:
+        analyzer["generos"][generos[-1]["name"]] = generos[-1]["rango"]
+        print(analyzer["generos"])
+    return None
 # Funciones de consulta
 
 def crimesSize(analyzer):
