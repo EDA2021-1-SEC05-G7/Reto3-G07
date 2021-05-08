@@ -25,7 +25,7 @@ import model
 import csv
 from pprint import pprint
 from DISClib.ADT import map as m
-
+import datetime as dt
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -43,7 +43,7 @@ def iniciar():
 # Funciones para la carga de datos
 def loadEvents(analyzer,tipo):
     """
-    Carga los datos de los archivos CSV context_content_features-small-small en el modelo
+    Carga los datos de los archivos CSV context_content_features-small en el modelo
     """
     userfile = cf.data_dir + "context_content_features-small.csv"
 
@@ -59,27 +59,22 @@ def loadEvents(analyzer,tipo):
         "tempo":float(event["tempo"]),
         "acousticness":float(event["acousticness"]),
         "energy":float(event["energy"]),
-        "mode":event["mode"],
-        "key":event["key"],
         "artist_id":event["artist_id"],
-        "tweet_lang":event["tweet_lang"],
         "track_id":event["track_id"],
-        "created_at":event["created_at"],
-        "lang":event["lang"],
-        "time_zone":event["time_zone"],
+        "created_at":dt.datetime.strptime(event["created_at"], '%Y-%m-%d %H:%M:%S').time(),
         "user_id":event["user_id"],
         "id":event["id"]
-        }
+        }        
         #prueba
+        
+        
+        
         """newdict = {tipo:event[tipo],"id":event["id"]}
-        print(newdict)"""
+        print(newdict["created_at"])"""
+        
         model.addCrime(analyzer, newdict, tipo)
     
-    cantidad = len(tipo)
-    mases = cantidad*"-"
-    print(mases,".....>")
-    print(tipo, "check")
-    print(mases,".....>")
+    print("",len(tipo)*"-","\n",tipo, "check\n",len(tipo)*"-","\n")
 
     return analyzer
 
@@ -119,8 +114,10 @@ def maxKey(analyzer):
 
 #pruebas
 
-"""analyzer = iniciar()
-data = loadEvents(analyzer,"instrumentalness")
-data = loadEvents(analyzer,"energy")
-data = loadEvents(analyzer,"danceability")
-print("reqcontrol",model.req2(analyzer,0.5,0.75,0.75,1))"""
+analyzer = iniciar()
+"""data = loadEvents(analyzer,"instrumentalness")
+data = loadEvents(analyzer,"energy")"""
+data = loadEvents(analyzer,"created_at")
+"""print("reqcontrol",model.req2(analyzer,0.5,0.75,0.75,1))"""
+print("prueba max key", model.maxKey(analyzer["created_at"]))
+print("prueba min key", model.minKey(analyzer["created_at"]))

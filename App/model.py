@@ -53,7 +53,7 @@ def newAnalyzer():
     Retorna el analizador inicializado.
     """
     analyzer = {'events': None}
-    lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy"]
+    lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy","created_at"]
     for i in lists:
         analyzer[i] = om.newMap(omaptype='RBT',
                                         comparefunction=compareEvent)
