@@ -26,6 +26,7 @@ import controller
 from DISClib.ADT import list as lt
 assert cf
 from DISClib.ADT import map as m
+import datetime
 
 
 
@@ -45,7 +46,7 @@ def printMenu():
     print("4- Encontrar musica para festejar.")
     print("5- Encontar música para estudiar.")
     print("6- Encontrar características de los géneros y crear un nuevo género")
-    print("7- ")
+    print("7- el 5")
     print("0- Salir")
     print("*******************************************")
 
@@ -73,7 +74,7 @@ while True:
         #Carga de datos
         """controller.loadEventAnalisis(analyzer)"""
         #lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy","created_at"]
-        lists = ["created_at"]
+        lists = ["created_at","tempo"]
         for i in lists:
             controller.loadEvents(analyzer,i)
         controller.loadSentiment(analyzer)
@@ -118,7 +119,7 @@ while True:
         
     elif int(inputs[0]) == 6:
         generos = (input("Introduzca los géneros de los cuales desea saber las canciones y los artistas separados por comas (,): \n")).split()
-        novus = int(input("¿Desea crear un nuevo género? \nIngrese 1 si sí lo desea crear, o pulse cualquier otra tecla para continuar: \n"))
+        novus = int(input("¿Desea crear un nuevo género? \nIngrese 1 si sí lo desea crear, o 0 si no: \n"))
         newgen = {}
         if novus == 1:
             nomen = input("Introduzca el nombre del nuevo género: \n")
@@ -128,7 +129,7 @@ while True:
             newgen["rango"] = [minimum,magnum]
             generos.append(newgen)
             controller.req4(analyzer,generos)
-        else:
+        elif novus == 0:
             nominis = None
             generos.append(nominis)
             controller.req4(analyzer,generos)
@@ -136,7 +137,12 @@ while True:
 
     elif int(inputs[0]) == 7:
         #Requerimiento 5
-        pass
+
+        minn = input("Introduzca el valor mínimo del rango para 'hora': \n")
+        mintime = datetime.datetime.strptime(minn, '%H:%M:%S').time()
+        maxx = input("Introduzca el valor máximo del rango para 'hora': \n")
+        maxtime = datetime.datetime.strptime(maxx, '%H:%M:%S').time()
+        controller.req5(analyzer,mintime,maxtime)
 
     else:
         sys.exit(0)

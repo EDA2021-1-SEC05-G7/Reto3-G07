@@ -313,13 +313,15 @@ def req3(analyzer, minimus, magnus, minima, magna):
 
 
 def req4(analyzer,generos):
+    print("gwsdfs")
     new = generos[-1] 
     """new guarda el último género añadido sea el que pido el usuario o None si no pidio ninguno"""
     if new == None: 
         """Si no se pidio ningún género este se elimina"""
+        print(generos)
         del(generos[-1])
-        
-    else:
+        print(generos)
+    elif new != None:
         analyzer["generos"][generos[-1]["name"]] = generos[-1]["rango"]
         generos.append(generos[-1]["name"])
         del(generos[-2])
@@ -361,9 +363,47 @@ def req4(analyzer,generos):
 
 
 
-def req5(analyzer, generos):
-    """ Recorrer la lista de canciones por hora y miarar por generos las reproducciones 
+def req5(analyzer, minn,maxx):
+    
+    """En carga de datos: 2 tablas de hash. T1: <Trach_id, [lista hashtags]> T2: <hashtag, vader>
+        Recorrer la lista de canciones por hora y miarar por generos las reproducciones 
         recorrer y revisar """
+
+    llaves = om.values(analyzer["created_at"],minn,maxx) 
+    listt =  m.newMap(numelements= lt.size(llaves),maptype="CHAINING",loadfactor=2)
+
+    """lista con valores dentro del rango en arbol created at"""
+    genn = []
+    for i in analyzer["generos"]:
+        contador2 = 0
+        contador3 = 0
+        listt =  m.newMap(numelements= lt.size(llaves),maptype="CHAINING",loadfactor=2)
+        iterator = it.newIterator(llaves)
+        """ iterador para la lista de valores en arbol energy (llaves)"""
+        while it.hasNext(iterator):
+            element = it.next(iterator)
+            kse = m.keySet(element["eventIndex"])
+            """lista con valores de tabla de hash contenida en cada elemento"""
+            itt = it.newIterator(kse)
+            while it.hasNext(itt):
+                newel = it.next(itt)
+                dit = me.getValue(m.get(element["eventIndex"],newel))
+                contador2 += lt.size(dit["eventlist"])
+                print(contador2)
+                newit = it.newIterator(dit["eventlist"])
+                while it.hasNext(newit):
+                    nnewl = it.next(newit)
+                    vt = nnewl["tempo"]
+                    if  vt >= analyzer["generos"][i][0] and vt <= analyzer["generos"][i][1]:
+                        contador3 += 1
+                        "total de reps"
+                        m.put(listt,nnewl["track_id"],nnewl)
+        tamaño = m.size(listt)
+        result = {"genero":i,
+                "total reps del rango": contador2, 
+                "total reps genero" : contador3,
+                "unique tracks":tamaño}
+        print(result)
 
 
 

@@ -117,6 +117,9 @@ def req3(analyzer, minimus, magnus, minima, magna):
 def req4(analyzer,generos):
     model.req4(analyzer,generos)
 
+def req5(analyzer,minn,maxx):
+    model.req5(analyzer,minn,maxx)
+
 # Funciones de ordenamiento
 
 # Funciones de consulta sobre el catálogo
