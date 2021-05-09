@@ -84,9 +84,9 @@ def loadSentiment(analyzer):
     input_file = csv.DictReader(open(userfile, encoding="utf-8"),
                                 delimiter=",")
     for hashtag in input_file:
-        newdic = {"hashtag": hashtag["hashtag"], "vader": float(hashtag["vader_avg"])}
-
-        model.addSentiment(analyzer, newdic)
+        if hashtag["vader_avg"] != "":
+            newdic = {"hashtag": hashtag["hashtag"], "vader": float(hashtag["vader_avg"])}
+            model.addSentiment(analyzer, newdic)
 
 
 def loadUser(analyzer):
@@ -96,7 +96,9 @@ def loadUser(analyzer):
                                 delimiter=",")
 
     for track in input_file:
-        newdicc = {"track_id":track["track_id"]}
+        
+        newdicc = {"track_id":track["track_id"],"hashtag":track["hashtag"].lower()}
+        model.addUser(analyzer,newdicc)
 
 # Requerimientos
 
@@ -134,10 +136,10 @@ def maxKey(analyzer):
 
 #pruebas
 
-analyzer = iniciar()
-"""data = loadEvents(analyzer,"instrumentalness")
-data = loadEvents(analyzer,"energy")"""
+"""analyzer = iniciar()
+data = loadEvents(analyzer,"instrumentalness")
+data = loadEvents(analyzer,"energy")
 data = loadEvents(analyzer,"created_at")
-"""print("reqcontrol",model.req2(analyzer,0.5,0.75,0.75,1))"""
+print("reqcontrol",model.req2(analyzer,0.5,0.75,0.75,1))
 print("prueba max key", model.maxKey(analyzer["created_at"]))
-print("prueba min key", model.minKey(analyzer["created_at"]))
+print("prueba min key", model.minKey(analyzer["created_at"]))"""

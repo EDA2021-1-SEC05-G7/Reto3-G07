@@ -155,7 +155,16 @@ def addSentiment(analyzer, sentiment):
     
     return None
     
+def addUser(analyzer,user):
+    if m.contains(analyzer["user"],user["track_id"]):
+        lt.addLast(analyzer["user"][user["track_id"]],user["hashtag"])
+    else:
+        m.put(analyzer["user"],user["track_id"],lt.newList(datastructure="ARRAY_LIST"))
+        print("bien")
+        lt.addLast(analyzer["user"][user["track_id"]],user["hashtag"])
+    return None
 
+        
 
 
 
