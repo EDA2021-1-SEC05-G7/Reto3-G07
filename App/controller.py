@@ -78,6 +78,26 @@ def loadEvents(analyzer,tipo):
 
     return analyzer
 
+def loadSentiment(analyzer):
+    userfile = cf.data_dir + "sentiment_values.csv"
+
+    input_file = csv.DictReader(open(userfile, encoding="utf-8"),
+                                delimiter=",")
+    for hashtag in input_file:
+        newdic = {"hashtag": hashtag["hashtag"], "vader": float(hashtag["vader_avg"])}
+
+        model.addSentiment(analyzer, newdic)
+
+
+def loadUser(analyzer):
+    userfile = cf.data_dir + "user_track_hashtag_timestamp-small.csv"
+
+    input_file = csv.DictReader(open(userfile, encoding="utf-8"),
+                                delimiter=",")
+
+    for track in input_file:
+        newdicc = {"track_id":track["track_id"]}
+
 # Requerimientos
 
 def req1(analyzer,carac,mink,maxk):
