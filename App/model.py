@@ -367,11 +367,13 @@ def req5(analyzer, minn,maxx):
 
     llaves = om.values(analyzer["created_at"],minn,maxx) 
     listt =  m.newMap(numelements= lt.size(llaves),maptype="CHAINING",loadfactor=2)
-
+    contador2 = 0
+    mayor = 0
     """lista con valores dentro del rango en arbol created at"""
     genn = []
+    result = {}
     for i in analyzer["generos"]:
-        contador2 = 0
+        
         contador3 = 0
         listt =  m.newMap(numelements= lt.size(llaves),maptype="CHAINING",loadfactor=2)
         iterator = it.newIterator(llaves)
@@ -384,22 +386,30 @@ def req5(analyzer, minn,maxx):
             while it.hasNext(itt):
                 newel = it.next(itt)
                 dit = me.getValue(m.get(element["eventIndex"],newel))
-                contador2 += lt.size(dit["eventlist"])
-                print(contador2)
+                #contador2 += lt.size(dit["eventlist"])
                 newit = it.newIterator(dit["eventlist"])
                 while it.hasNext(newit):
                     nnewl = it.next(newit)
                     vt = nnewl["tempo"]
                     if  vt >= analyzer["generos"][i][0] and vt <= analyzer["generos"][i][1]:
                         contador3 += 1
+                        contador2 += 1
                         "total de reps"
                         m.put(listt,nnewl["track_id"],nnewl)
         tamaño = m.size(listt)
-        result = {"genero":i,
-                "total reps del rango": contador2, 
-                "total reps genero" : contador3,
-                "unique tracks":tamaño}
-        print(result)
+        
+        if contador3 > mayor:
+            mayor = contador3
+            listf = listt
+        del listt
+        result[i] = { "total reps genero" : contador3,
+                "unique tracks": tamaño}
+        result["total de reps dentro del rango"] = contador2
+        result["mayor"] = mayor
+        
+
+    
+    pprint(result)
 
 
 

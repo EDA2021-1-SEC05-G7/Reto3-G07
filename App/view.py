@@ -74,7 +74,7 @@ while True:
         #Carga de datos
         """controller.loadEventAnalisis(analyzer)"""
         #lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy","created_at"]
-        lists = ["tempo"]
+        lists = ["tempo","created_at"]
         for i in lists:
             controller.loadEvents(analyzer,i)
         """controller.loadSentiment(analyzer)
