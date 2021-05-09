@@ -313,44 +313,40 @@ def req3(analyzer, minimus, magnus, minima, magna):
 
 
 def req4(analyzer,generos):
-    print("gwsdfs")
     new = generos[-1] 
     """new guarda el último género añadido sea el que pido el usuario o None si no pidio ninguno"""
     if new == None: 
         """Si no se pidio ningún género este se elimina"""
-        print(generos)
         del(generos[-1])
-        print(generos)
-    elif new != None:
+    else:
         analyzer["generos"][generos[-1]["name"]] = generos[-1]["rango"]
         generos.append(generos[-1]["name"])
         del(generos[-2])
         #print(analyzer["generos"])
         """si se pidió un nuevo género este se añade a la lista de géneros en analyzer"""
-        totalis = 0
-        """totalis va a guardar el total de reproducciones para todos los generos"""
-        print("°°°°°° Req No. 4 results °°°°°°")
-        
-        for i in generos:
-            """se empieza a recorrer la lista que incluye los géneros pedidos y el nuevo género"""
-            minymag = analyzer["generos"][str(i).lower()] 
-            """minymag guarda los límites máximos y minimos del tempo del genero"""
-            (a,b) = req1(analyzer, "tempo", minymag[0], minymag[1])
-            """la tupla guarda el numero total de reproducciones del genero en a y una lista con los artistas en b"""
-            totalis += int(a)
-            print("========", i.upper(), "========")
-            print("For", i, "the tempo is between ", minymag[0], " and ", minymag[1], " BPM")
-            print(i, "reproductions: ", a, " with ", m.size(b), " different artists")
-            print("~~~~~ Some artists for", i, "~~~~~")
-            lilkeys = m.keySet(b)
-            j = 0
-            while j <= 9:
-                volans = lt.getElement(lilkeys, j)
-                print("Artist ", j+1, ": ", volans)
-                j += 1
+    totalis = 0
+    """totalis va a guardar el total de reproducciones para todos los generos"""        
+    print("°°°°°° Req No. 4 results °°°°°°")    
+    for i in generos:
+        """se empieza a recorrer la lista que incluye los géneros pedidos y el nuevo género"""            
+        minymag = analyzer["generos"][str(i).lower()] 
+        """minymag guarda los límites máximos y minimos del tempo del genero"""
+        (a,b) = req1(analyzer, "tempo", minymag[0], minymag[1])
+        """la tupla guarda el numero total de reproducciones del genero en a y una lista con los artistas en b"""            
+        totalis += int(a)
+        print("========", i.upper(), "========")
+        print("For", i, "the tempo is between ", minymag[0], " and ", minymag[1], " BPM")
+        print(i, "reproductions: ", a, " with ", m.size(b), " different artists")
+        print("~~~~~ Some artists for", i, "~~~~~")
+        lilkeys = m.keySet(b)
+        j = 0
+        while j <= 9:
+            volans = lt.getElement(lilkeys, j)
+            print("Artist ", j+1, ": ", volans)
+            j += 1
             #print(a, b)
             
-        print(" \nTotal of reproductions: ", totalis)
+    print(" \nTotal of reproductions: ", totalis)
 
         
     return None

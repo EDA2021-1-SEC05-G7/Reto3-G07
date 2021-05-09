@@ -74,13 +74,13 @@ while True:
         #Carga de datos
         """controller.loadEventAnalisis(analyzer)"""
         #lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy","created_at"]
-        lists = ["created_at","tempo"]
+        lists = ["tempo"]
         for i in lists:
             controller.loadEvents(analyzer,i)
-        controller.loadSentiment(analyzer)
+        """controller.loadSentiment(analyzer)
         controller.loadUser(analyzer)
         #print(controller.maxKey(analyzer["created_at"]))
-        print(m.size(analyzer["user"]))
+        print(m.size(analyzer["user"]))"""
 
         
 
@@ -118,7 +118,7 @@ while True:
 
         
     elif int(inputs[0]) == 6:
-        generos = (input("Introduzca los géneros de los cuales desea saber las canciones y los artistas separados por comas (,): \n")).split()
+        generos = (input("Introduzca los géneros de los cuales desea saber las canciones y los artistas separados por comas (,): \n")).split(",")
         novus = int(input("¿Desea crear un nuevo género? \nIngrese 1 si sí lo desea crear, o 0 si no: \n"))
         newgen = {}
         if novus == 1:
