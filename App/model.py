@@ -155,13 +155,26 @@ def addSentiment(analyzer, sentiment):
     
     return None
     
+
+
+
 def addUser(analyzer,user):
     if m.contains(analyzer["user"],user["track_id"]):
-        lt.addLast(analyzer["user"][user["track_id"]],user["hashtag"])
+
+        pareja = m.get(analyzer["user"], user["track_id"])
+        listica = me.getValue(pareja)
+        if not lt.isPresent(listica, user["hashtag"]):
+            lt.addLast(listica, user["hashtag"]) 
+            m.put(analyzer["user"],user["track_id"], listica)
+        
     else:
         m.put(analyzer["user"],user["track_id"],lt.newList(datastructure="ARRAY_LIST"))
-        print("bien")
-        lt.addLast(analyzer["user"][user["track_id"]],user["hashtag"])
+        pareja = m.get(analyzer["user"], user["track_id"])
+        listica = me.getValue(pareja)
+        lt.addLast(listica, user["hashtag"])
+        m.put(analyzer["user"],user["track_id"], listica)
+
+    
     return None
 
         
@@ -349,8 +362,7 @@ def req4(analyzer,generos):
 
 
 def req5(analyzer, generos):
-    """En carga de datos: 2 tablas de hash. T1: <Trach_id, [lista hashtags]> T2: <hashtag, vader>
-        Recorrer la lista de canciones por hora y miarar por generos las reproducciones 
+    """ Recorrer la lista de canciones por hora y miarar por generos las reproducciones 
         recorrer y revisar """
 
 

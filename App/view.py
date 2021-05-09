@@ -25,6 +25,8 @@ import sys
 import controller
 from DISClib.ADT import list as lt
 assert cf
+from DISClib.ADT import map as m
+
 
 
 """
@@ -63,6 +65,8 @@ while True:
         analyzer = controller.iniciar()
         for llaves in analyzer:
             print(llaves)
+
+
     elif int(inputs[0]) == 2:
         print("Cargando información de los archivos ...")
 
@@ -75,6 +79,8 @@ while True:
         controller.loadSentiment(analyzer)
         controller.loadUser(analyzer)
         #print(controller.maxKey(analyzer["created_at"]))
+        print(m.size(analyzer["user"]))
+
         
 
     elif int(inputs[0]) == 3:
