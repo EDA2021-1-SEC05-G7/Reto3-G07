@@ -68,11 +68,11 @@ while True:
 
         #Carga de datos
         """controller.loadEventAnalisis(analyzer)"""
-        #lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy"]
-        lists = ["created_at"]
+        lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy"]
+        #lists = ["created_at"]
         for i in lists:
             controller.loadEvents(analyzer,i)
-        print(controller.maxKey(analyzer["created_at"]))
+        #print(controller.maxKey(analyzer["created_at"]))
         
 
     elif int(inputs[0]) == 3:

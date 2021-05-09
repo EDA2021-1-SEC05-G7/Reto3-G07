@@ -68,6 +68,10 @@ def newAnalyzer():
                             "r&b": [60,80],
                             "rock": [110,140],
                             "metal": [100,160]}
+    analyzer["sentiment"] = m.newMap(maptype='CHAINING')
+    analyzer["user"] = m.newMap(maptype='CHAINING')
+
+
     return analyzer
 
 
@@ -144,6 +148,17 @@ def newOffenseEntry(offensegrp, crime):
     ofentry['event'] = offensegrp
     ofentry['eventlist'] = lt.newList('ARRAY_LIST', compareEvent)
     return ofentry
+
+def addSentiment(analyzer, sentiment):
+    
+    m.put(analyzer["sentiment"], sentiment["hashtag"].lower(), sentiment["vader"])
+    
+    return None
+    
+
+
+
+
 
 
 
@@ -315,6 +330,29 @@ def req4(analyzer,generos):
 
         
     return None
+
+
+
+
+
+
+
+
+
+def req5(analyzer, generos):
+    """En carga de datos: 2 tablas de hash. T1: <Trach_id, [lista hashtags]> T2: <hashtag, vader>
+        Recorrer la lista de canciones por hora y miarar por generos las reproducciones 
+        recorrer y revisar """
+
+
+
+
+
+
+
+
+
+
 # Funciones de consulta
 
 def crimesSize(analyzer):
