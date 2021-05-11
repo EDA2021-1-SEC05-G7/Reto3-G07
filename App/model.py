@@ -30,7 +30,7 @@ from DISClib.ADT import list as lt
 from DISClib.ADT import map as m
 from DISClib.DataStructures import mapentry as me
 from DISClib.ADT import orderedmap as om
-from DISClib.Algorithms.Sorting import shellsort as sa
+from DISClib.Algorithms.Sorting import mergesort as mgs
 from DISClib.DataStructures import listiterator as it
 from pprint import pprint 
 from random import randint
@@ -352,13 +352,6 @@ def req4(analyzer,generos):
     return None
 
 
-
-
-
-
-
-
-
 def req5(analyzer, minn,maxx):
     
     """En carga de datos: 2 tablas de hash. T1: <Trach_id, [lista hashtags]> T2: <hashtag, vader>
@@ -368,6 +361,7 @@ def req5(analyzer, minn,maxx):
     llaves = om.values(analyzer["created_at"],minn,maxx) 
     listt =  m.newMap(numelements= lt.size(llaves),maptype="CHAINING",loadfactor=2)
     contador2 = 0
+    contador4 = 0
     mayor = 0
     """lista con valores dentro del rango en arbol created at"""
     genn = []
@@ -386,7 +380,8 @@ def req5(analyzer, minn,maxx):
             while it.hasNext(itt):
                 newel = it.next(itt)
                 dit = me.getValue(m.get(element["eventIndex"],newel))
-                #contador2 += lt.size(dit["eventlist"])
+                contador4 += lt.size(dit["eventlist"])
+                #contador 4 = total reps rango real
                 newit = it.newIterator(dit["eventlist"])
                 while it.hasNext(newit):
                     nnewl = it.next(newit)
@@ -394,6 +389,7 @@ def req5(analyzer, minn,maxx):
                     if  vt >= analyzer["generos"][i][0] and vt <= analyzer["generos"][i][1]:
                         contador3 += 1
                         contador2 += 1
+                        #contador 2 reps rango fake pdf
                         "total de reps"
                         m.put(listt,nnewl["track_id"],nnewl)
         tamaño = m.size(listt)
@@ -408,12 +404,26 @@ def req5(analyzer, minn,maxx):
         result["mayor"] = mayor
         
 
+
     
     pprint(result)
 
 
-
-
+def sortHash(analyzer):
+    newlt = lt.newList(datastructure="ARRAY_LIST")
+    listk =  m.keySet(analyzer["user"])
+    itt = it.newIterator(listk)
+    print("entró1")
+    while it.hasNext(itt):
+        element = it.next(itt)
+        sizelisthash = lt.size(me.getValue(m.get(analyzer["user"],element)))
+        pequelt = [element,sizelisthash]
+        lt.addLast(newlt,pequelt)
+    print("salió")
+    result = sortVideos(newlt,10,compareCantHash)
+    print(lt.firstElement(result))
+    print(result)
+    
 
 
 
@@ -495,4 +505,12 @@ def compareEvent(event1, event2):
     else:
         return -1
 
+def compareCantHash(event1,event2):
+    return (event1[1]> event2[1])
 # Funciones de ordenamiento
+
+def sortVideos(lst,size,cmp):
+    copia_lista = lst.copy()
+    list_orden = mgs.sort(copia_lista, cmp)
+    resul = lt.subList(list_orden, 1, size)
+    return resul

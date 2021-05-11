@@ -26,6 +26,9 @@ import csv
 from pprint import pprint
 from DISClib.ADT import map as m
 import datetime as dt
+import tracemalloc
+import time
+
 
 """
 El controlador se encarga de mediar entre la vista y el modelo.
@@ -103,22 +106,109 @@ def loadUser(analyzer):
 # Requerimientos
 
 def req1(analyzer,carac,mink,maxk):
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+    
+    #req
     (a,b) = model.req1(analyzer,carac,mink,maxk)
     b = m.size(b)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+    print("time",delta_time,"memory",delta_memory)
+    
     return (a,b)
 
 def req2(analyzer,mne,mxe,mnd,mxd):
-    return model.req2(analyzer,mne,mxe,mnd,mxd)
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+    
+    #req
+    req = model.req2(analyzer,mne,mxe,mnd,mxd)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+    print("time",delta_time,"memory",delta_memory)
+    return req
 
 def req3(analyzer, minimus, magnus, minima, magna):
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
     
-    return model.req3(analyzer, minimus, magnus, minima, magna)
+    #req
+    req = model.req3(analyzer, minimus, magnus, minima, magna)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+    print("time",delta_time,"memory",delta_memory)
+    return req
+    
 
 def req4(analyzer,generos):
-    model.req4(analyzer,generos)
+
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+    
+    #req
+    req = model.req4(analyzer,generos)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+    print("time",delta_time,"memory",delta_memory)
+    return req
 
 def req5(analyzer,minn,maxx):
-    model.req5(analyzer,minn,maxx)
+
+    delta_time = -1.0
+    delta_memory = -1.0
+
+    tracemalloc.start()
+    start_time = getTime()
+    start_memory = getMemory()
+
+    #req
+    req = model.req5(analyzer,minn,maxx)
+
+    stop_memory = getMemory()
+    stop_time = getTime()
+    tracemalloc.stop()
+
+    delta_time = stop_time - start_time
+    delta_memory = deltaMemory(start_memory, stop_memory)
+    print("time",delta_time,"memory",delta_memory)
+    return req
 
 # Funciones de ordenamiento
 
@@ -139,10 +229,40 @@ def maxKey(analyzer):
 
 #pruebas
 
-"""analyzer = iniciar()
-data = loadEvents(analyzer,"instrumentalness")
-data = loadEvents(analyzer,"energy")
-data = loadEvents(analyzer,"created_at")
-print("reqcontrol",model.req2(analyzer,0.5,0.75,0.75,1))
-print("prueba max key", model.maxKey(analyzer["created_at"]))
-print("prueba min key", model.minKey(analyzer["created_at"]))"""
+#analyzer = iniciar()
+#data = loadEvents(analyzer,"instrumentalness")
+#data = loadEvents(analyzer,"energy")
+#data = loadUser(analyzer)
+#"print("reqcontrol",model.req2(analyzer,0.5,0.75,0.75,1))
+#"""print("prueba max key", model.maxKey(analyzer["created_at"]))
+#""print("prueba min key", model.minKey(analyzer["created_at"]))"""
+#print(model.sortHash(analyzer))
+
+def getTime():
+    """
+    devuelve el instante tiempo de procesamiento en milisegundos
+    """
+    return float(time.perf_counter()*1000)
+
+
+def getMemory():
+    """
+    toma una muestra de la memoria alocada en instante de tiempo
+    """
+    return tracemalloc.take_snapshot()
+
+
+def deltaMemory(start_memory, stop_memory):
+    """
+    calcula la diferencia en memoria alocada del programa entre dos
+    instantes de tiempo y devuelve el resultado en bytes (ej.: 2100.0 B)
+    """
+    memory_diff = stop_memory.compare_to(start_memory, "filename")
+    delta_memory = 0.0
+
+    # suma de las diferencias en uso de memoria
+    for stat in memory_diff:
+        delta_memory = delta_memory + stat.size_diff
+    # de Byte -> kByte
+    delta_memory = delta_memory/1024.0
+    return delta_memory
