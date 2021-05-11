@@ -241,6 +241,7 @@ def req2(analyzer,mne,mxe,mnd,mxd):
                 vd = nnewl["danceability"]
                 if  vd >= mnd and vd <= mxd:
                     m.put(listt,nnewl["track_id"],nnewl)
+
     print("++++++ Req 2. results... ++++++")
     print("Energy is between",mne,"and",mxe)
     print("Danceability is between",mnd,"and",mxd)
@@ -335,7 +336,7 @@ def req4(analyzer,generos):
         """la tupla guarda el numero total de reproducciones del genero en a y una lista con los artistas en b"""            
         totalis += int(a)
         print("========", i.upper(), "========")
-        print("For", i, "the tempo is between ", minymag[0], " and ", minymag[1], " BPM")
+        print("For", i.title(), "the tempo is between ", minymag[0], " and ", minymag[1], " BPM")
         print(i, "reproductions: ", a, " with ", m.size(b), " different artists")
         print("~~~~~ Some artists for", i, "~~~~~")
         lilkeys = m.keySet(b)
@@ -361,13 +362,13 @@ def req5(analyzer, minn,maxx):
     llaves = om.values(analyzer["created_at"],minn,maxx) 
     listt =  m.newMap(numelements= lt.size(llaves),maptype="CHAINING",loadfactor=2)
     contador2 = 0
-    contador4 = 0
     mayor = 0
+    genero = None
     """lista con valores dentro del rango en arbol created at"""
     genn = []
     result = {}
     for i in analyzer["generos"]:
-        
+        contador4 = 0
         contador3 = 0
         listt =  m.newMap(numelements= lt.size(llaves),maptype="CHAINING",loadfactor=2)
         iterator = it.newIterator(llaves)
@@ -396,17 +397,22 @@ def req5(analyzer, minn,maxx):
         
         if contador3 > mayor:
             mayor = contador3
+            gene = i
             listf = listt
         del listt
-        result[i] = { "total reps genero" : contador3,
-                "unique tracks": tamaño}
-        result["total de reps dentro del rango"] = contador2
-        result["mayor"] = mayor
+        result[i] = {"reps": contador3,
+                "unique": tamaño}
+        result["docs"] = contador2
+        result["mayorn"] = mayor
+        result["mayorg"] = gene
+        result["bien"] = contador4
+
+    return (result)
         
 
 
     
-    pprint(result)
+    #pprint(result)
 
 
 def sortHash(analyzer):
