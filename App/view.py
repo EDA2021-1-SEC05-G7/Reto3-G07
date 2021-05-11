@@ -73,6 +73,7 @@ while True:
 
         #Carga de datos
         lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy","created_at"]
+        
         for i in lists:
             controller.loadEvents(analyzer,i)
         print("loading User ...\n")
@@ -94,7 +95,7 @@ while True:
         print("Min key: ", str(controller.minKey(analyzer[carac])))
         print("Max key: ", str(controller.maxKey(analyzer[carac])))
         (a,b) = controller.req1(analyzer,carac,mink,maxk)
-        print("total repro",a,"artistas",b)
+        print("Total of reproductions:",a,"Total of unique artists:",b)
         
         
 

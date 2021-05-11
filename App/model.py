@@ -401,12 +401,6 @@ def req5(analyzer, minn,maxx):
             gene = i
             listf = listt
         del listt
-<<<<<<< HEAD
-        result[i] = { "total reps genero" : contador3,
-                "unique tracks": tamaño}
-        result["total de reps dentro del rango"] = contador2
-        result["mayor"] = mayor
-=======
         result[i] = {"reps": contador3,
                 "unique": tamaño}
         result["docs"] = contador2
@@ -417,10 +411,9 @@ def req5(analyzer, minn,maxx):
     
         
     listord = sortHash(listf)
->>>>>>> b7c85732cb871ec5bfd56a65e05739c56a54a094
     
     FinalMasterList = lt.newList(datastructure="ARRAY_LIST")
-    nt = it.newIterator(listf)
+    nt = it.newIterator(listord)
     while it.hasNext(nt):
         suma = 0
         newlit = []
@@ -457,7 +450,7 @@ def sortHash(tabla):
     itt = it.newIterator(listk)
     while it.hasNext(itt):
         element = it.next(itt)
-        sizelisthash = lt.size(me.getValue(m.get(analyzer["user"],element)))
+        sizelisthash = lt.size(me.getValue(m.get(tabla,element)))
         pequelt = [element,sizelisthash]
         lt.addLast(newlt,pequelt)
     return sortVideos(newlt,10,compareCantHash)
