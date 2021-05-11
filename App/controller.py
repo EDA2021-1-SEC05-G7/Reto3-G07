@@ -230,13 +230,17 @@ def maxKey(analyzer):
 #pruebas
 
 #analyzer = iniciar()
-#data = loadEvents(analyzer,"instrumentalness")
+#data = loadEvents(analyzer,"created_at")
+
 #data = loadEvents(analyzer,"energy")
-#data = loadUser(analyzer)
+#dataU = loadUser(analyzer)
+
 #"print("reqcontrol",model.req2(analyzer,0.5,0.75,0.75,1))
 #"""print("prueba max key", model.maxKey(analyzer["created_at"]))
 #""print("prueba min key", model.minKey(analyzer["created_at"]))"""
 #print(model.sortHash(analyzer))
+
+
 
 def getTime():
     """

@@ -391,7 +391,8 @@ def req5(analyzer, minn,maxx):
                         contador2 += 1
                         #contador 2 reps rango fake pdf
                         "total de reps"
-                        m.put(listt,nnewl["track_id"],nnewl)
+                        valor = me.getValue(m.get(analyzer["user"],nnewl["track_id"]))
+                        m.put(listt,nnewl["track_id"],valor)
         tamaño = m.size(listt)
         
         if contador3 > mayor:
@@ -403,26 +404,55 @@ def req5(analyzer, minn,maxx):
         result["total de reps dentro del rango"] = contador2
         result["mayor"] = mayor
         
+    listord = sortHash(listf)
+    
+    FinalMasterList = lt.newList(datastructure="ARRAY_LIST")
+    nt = it.newIterator(listord)
+    while it.hasNext(nt):
+        suma = 0
+        newlit = []
+        element = it.next(nt)
+        listhash = me.getValue(m.get(listf,element[0]))
+        sizelisthash = lt.size(listhash)
+        newit = it.newIterator(listhash)
+        cont = 0
+        while it.hasNext(newit):
+            hashtag = it.next(newit)
+            cont += 1
+            contiene = m.contains(analyzer["sentiment"],hashtag)
+            
+            if contiene:
+                vader = me.getValue(m.get(analyzer["sentiment"],hashtag))
+                suma += vader
+                #print(cont,hashtag,vader,contiene)
+            else:
+                sizelisthash -= 1
+                #print(cont,hashtag,"not vader",contiene)
+        prom = suma/sizelisthash
+        newlit = [element[0],sizelisthash,prom]
+        lt.addLast(FinalMasterList,newlit)
+    return FinalMasterList
+    top = 0
+    newnew = it.newIterator(FinalMasterList)
+    while it.hasNext(newnew):
+        elem = it.next(newnew)
+        print("TOP",top+1,"track:",elem[0],"with",elem[1],"hashtags and VADER =",round(elem[2],1))
+
 
 
     
-    pprint(result)
 
 
-def sortHash(analyzer):
+def sortHash(tabla):
     newlt = lt.newList(datastructure="ARRAY_LIST")
-    listk =  m.keySet(analyzer["user"])
+    listk =  m.keySet(tabla)
     itt = it.newIterator(listk)
-    print("entró1")
     while it.hasNext(itt):
         element = it.next(itt)
-        sizelisthash = lt.size(me.getValue(m.get(analyzer["user"],element)))
+        sizelisthash = lt.size(me.getValue(m.get(tabla,element)))
         pequelt = [element,sizelisthash]
         lt.addLast(newlt,pequelt)
-    print("salió")
-    result = sortVideos(newlt,10,compareCantHash)
-    print(lt.firstElement(result))
-    print(result)
+    return sortVideos(newlt,10,compareCantHash)
     
 
 
