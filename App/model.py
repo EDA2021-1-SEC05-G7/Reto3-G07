@@ -408,7 +408,7 @@ def req5(analyzer, minn,maxx):
         result["mayorg"] = gene
         result["bien"] = contador4
 
-    return (result)
+    
         
     listord = sortHash(listf)
     
@@ -437,13 +437,8 @@ def req5(analyzer, minn,maxx):
         prom = suma/sizelisthash
         newlit = [element[0],sizelisthash,prom]
         lt.addLast(FinalMasterList,newlit)
-    return FinalMasterList
-    top = 0
-    newnew = it.newIterator(FinalMasterList)
-    while it.hasNext(newnew):
-        elem = it.next(newnew)
-        print("TOP",top+1,"track:",elem[0],"with",elem[1],"hashtags and VADER =",round(elem[2],1))
-
+    return (FinalMasterList, result)
+    
 
 
     

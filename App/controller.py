@@ -28,6 +28,8 @@ from DISClib.ADT import map as m
 import datetime as dt
 import tracemalloc
 import time
+from DISClib.DataStructures import listiterator as it
+
 
 
 """
@@ -199,7 +201,9 @@ def req5(analyzer,minn,maxx):
     start_memory = getMemory()
 
     #req
-    req = model.req5(analyzer,minn,maxx)
+    (b, req) = model.req5(analyzer,minn,maxx)
+
+
     print("\n °°°°°° Req No. 5 results °°°°°°")
     print("There is a total of", req["bien"], "reproductions, and", req["docs"], "reproductions according to the 'Reto 3' Document, between ", minn, "and", maxx, "\n")
     
@@ -220,9 +224,15 @@ def req5(analyzer,minn,maxx):
 
     print("~~~~~~~~~~~~~~~~~~~~~~~", gmayor.upper(), "SENTIMENT ANALYSIS ~~~~~~~~~~~~~~~~~~~~~~~")
     print(gmayor.title(), "has", req[gmayor]["unique"], "unique tracks.")
-    print("The first TOP 10 tracks are: ")
-    
-    print(req)
+    print("The first TOP 10 tracks are: \n")
+    top = 0
+    newnew = it.newIterator(b)
+    while it.hasNext(newnew):
+        elem = it.next(newnew)
+        print("TOP",top+1,"track:",elem[0],"with",elem[1],"hashtags and VADER =",round(elem[2],1))
+        top += 1
+
+    #print(req)
 
     stop_memory = getMemory()
     stop_time = getTime()
