@@ -42,11 +42,11 @@ def printMenu():
     print("Bienvenido")
     print("1- Inicializar el analizador.")
     print("2- Cargar información en el catálogo.")
-    print("3- Caracterizar las reproducciónes.")
-    print("4- Encontrar musica para festejar.")
-    print("5- Encontar música para estudiar.")
-    print("6- Encontrar características de los géneros y crear un nuevo género")
-    print("7- el 5")
+    print("3- Req 1: Caracterizar las reproducciónes.")
+    print("4- Req 2: Encontrar musica para festejar.")
+    print("5- Req 3: Encontar música para estudiar.")
+    print("6- Req 4: Encontrar características de los géneros y crear un nuevo género")
+    print("7- Req 5: Indicar el género musical más escuchado en el tiempo")
     print("0- Salir")
     print("*******************************************")
 
@@ -72,21 +72,15 @@ while True:
         print("Cargando información de los archivos ...")
 
         #Carga de datos
-        """controller.loadEventAnalisis(analyzer)"""
         lists = ["instrumentalness","liveness","speechiness","danceability","valence","loudness","tempo","acousticness","energy","created_at"]
-        lists = ["created_at"]
         for i in lists:
             controller.loadEvents(analyzer,i)
-        """controller.loadSentiment(analyzer)
+        print("loading User ...\n")
         controller.loadUser(analyzer)
-        #print(controller.maxKey(analyzer["created_at"]))
-        print(m.size(analyzer["user"]))"""
-        print("loading user ...\n")
-        controller.loadUser(analyzer)
-        print("user loaded\n")
-        print("loading sentiment...\n")
+        print("User loaded\n")
+        print("loading Sentiment...\n")
         controller.loadSentiment(analyzer)
-        print("sentiment loaded")
+        print("Sentiment loaded\n")
 
         
 

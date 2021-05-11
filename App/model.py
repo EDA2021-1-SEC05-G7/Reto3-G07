@@ -403,11 +403,9 @@ def req5(analyzer, minn,maxx):
                 "unique tracks": tamaño}
         result["total de reps dentro del rango"] = contador2
         result["mayor"] = mayor
-        
-    listord = sortHash(listf)
     
     FinalMasterList = lt.newList(datastructure="ARRAY_LIST")
-    nt = it.newIterator(listord)
+    nt = it.newIterator(listf)
     while it.hasNext(nt):
         suma = 0
         newlit = []
@@ -420,7 +418,6 @@ def req5(analyzer, minn,maxx):
             hashtag = it.next(newit)
             cont += 1
             contiene = m.contains(analyzer["sentiment"],hashtag)
-            
             if contiene:
                 vader = me.getValue(m.get(analyzer["sentiment"],hashtag))
                 suma += vader
@@ -449,7 +446,7 @@ def sortHash(tabla):
     itt = it.newIterator(listk)
     while it.hasNext(itt):
         element = it.next(itt)
-        sizelisthash = lt.size(me.getValue(m.get(tabla,element)))
+        sizelisthash = lt.size(me.getValue(m.get(analyzer["user"],element)))
         pequelt = [element,sizelisthash]
         lt.addLast(newlt,pequelt)
     return sortVideos(newlt,10,compareCantHash)
